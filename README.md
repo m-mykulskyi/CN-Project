@@ -1,6 +1,6 @@
 ## Opis projektu
 
-### Zadanie:
+###  Zadanie:
 
 1. Przygotowanie środowiska developerskiego dla projektu przy pomocy Dockera.
 2. Istnieje możliwość pracy samodzielnej bądź w grupach maksymalnie 2 osobowych.
