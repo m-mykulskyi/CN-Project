@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # PHP with Laravel
+  php:
+    image: php:8.0-fpm
+    container_name: laravel-php
+    volumes:
+      - ./laravel-app:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+
+  # Nginx
+  nginx:
+    image: nginx:latest
+    container_name: laravel-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./laravel-app:/var/www/html
+      - ./nginx-config:/etc/nginx/conf.d
+    depends_on:
+      - php
+    networks:
+      - app-network
+
+  # MySQL
+  mysql:
+    image: mysql:5.7
+    container_name: laravel-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: laravel_db
+      MYSQL_USER: laravel_user
+      MYSQL_PASSWORD: laravel_password
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+
+  # Node.js (for running front-end build processes)
+  node:
+    image: node:14
+    container_name: laravel-node
+    volumes:
+      - ./laravel-app:/var/www/html
+    working_dir: /var/www/html
+    command: npm install
+    depends_on:
+      - php
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
