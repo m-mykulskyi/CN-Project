@@ -1,0 +1,66 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{Sprawozdanie z Konfiguracji Docker-Compose.yml Projektu}
+\author{Mykulskyi Mykyta, Vladyslav Kutsyn}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Wstęp}
+W niniejszym sprawozdaniu przedstawiam konfigurację pliku docker-compose.yml dla projektu oraz instrukcję, jak uruchomić ten projekt przy użyciu Dockera. Celem projektu było stworzenie środowiska do pracy z PHP, Laravel, Nginx, MySQL i Node.js. W ramach sprawozdania omówię kroki, jakie podjąłem, aby osiągnąć ten cel.
+
+\section{Instrukcja uruchomienia projektu}
+\subsection{Kroki do uruchomienia projektu}
+Aby uruchomić projekt, postępuj zgodnie z poniższymi krokami:
+\begin{enumerate}
+    \item Zainstaluj Docker na swoim systemie, jeśli jeszcze tego nie zrobiłeś.
+    \item Skopiuj plik docker-compose.yml do katalogu projektu.
+    \item Otwórz terminal i przejdź do katalogu, w którym znajduje się plik docker-compose.yml.
+    \item Uruchom projekt przy użyciu komendy:
+    \begin{verbatim}
+    docker-compose up -d
+    \end{verbatim}
+    \item Po zakończeniu procesu uruchomienia, projekt będzie dostępny pod adresem http://localhost.
+\end{enumerate}
+
+\subsection{Dostęp do konsoli PHP w kontenerze}
+Aby uzyskać dostęp do konsoli PHP wewnątrz kontenera, wykonaj następujące kroki:
+\begin{enumerate}
+    \item Otwórz terminal.
+    \item Uruchom poniższą komendę:
+    \begin{verbatim}
+    docker exec -it laravel-php bash
+    \end{verbatim}
+    \item Teraz jesteś wewnątrz kontenera PHP i możesz korzystać z narzędzi, takich jak Composer.
+\end{enumerate}
+
+\section{Opis pliku docker-compose.yml}
+Poniżej znajduje się opis pliku docker-compose.yml:
+
+\begin{verbatim}
+% Wstaw plik docker-compose.yml tutaj
+\end{verbatim}
+
+\section{Opis poszczególnych usług}
+\subsection{PHP with Laravel (php)}
+Ta usługa używa obrazu php:8.0-fpm i jest odpowiedzialna za serwer PHP w połączeniu z Laravel. Pliki projektu są montowane z lokalnego katalogu ./laravel-app, a kontener pracuje w katalogu /var/www/html.
+
+\subsection{Nginx (nginx)}
+Usługa Nginx korzysta z obrazu nginx:latest i obsługuje serwer WWW. Port 80 jest mapowany na port 80 w kontenerze, a pliki konfiguracyjne Nginx są montowane z ./nginx-config.
+
+\subsection{MySQL (mysql)}
+Usługa MySQL używa obrazu mysql:5.7 i jest używana jako baza danych projektu. Skonfigurowane są odpowiednie zmienne środowiskowe i mapowane porty.
+
+\subsection{Node.js (node)}
+Ta usługa wykorzystuje obraz node:14 i służy do uruchamiania procesów budowy front-endu. Pliki projektu są montowane do kontenera, a wykonywane jest polecenie "npm install."
+
+\section{Ewentualne uwagi}
+W trakcie konfiguracji projektu warto zwrócić uwagę na wybór konkretnych obrazów Docker oraz ich wersji. Upewnij się, że używasz stabilnych i bezpiecznych obrazów, które są zgodne z wymaganiami Twojego projektu.
+
+\section{Podsumowanie}
+Podczas pracy nad projektem udało mi się skonfigurować środowisko Docker-Compose, które pozwala na uruchomienie projektu z PHP, Laravel, Nginx, MySQL i Node.js. Problemy napotkane podczas konfiguracji zostały rozwiązane. Jednak zawsze istnieje pole do poprawy, na przykład, można by dodać automatyczne skrypty do inicjalizacji bazy danych lub bardziej rozbudowane narzędzia do monitorowania kontenerów.
+
+\end{document}
